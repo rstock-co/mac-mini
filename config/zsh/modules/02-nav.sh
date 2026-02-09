@@ -51,6 +51,32 @@ if command -v rg &> /dev/null; then
     export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 fi
 
+# ====== Project Switcher ======
+
+# Core: find git repos under project dirs, pick with fzf
+_p() {
+  fd -H -t d '^\.git$' ~/agents ~/clients ~/dev 2>/dev/null \
+    | xargs -I{} dirname {} \
+    | sed "s|$HOME/||" \
+    | sort \
+    | fzf --height=40% --reverse --exact
+}
+
+# pj - project jump (cd only)
+pj() { local s=$(_p); [[ -n "$s" ]] && cd "$HOME/$s"; }
+
+# pc - project + claude
+pc() { local s=$(_p); [[ -n "$s" ]] && cd "$HOME/$s" && claude; }
+
+# pcv - project + claude + vscode
+pcv() {
+  local s=$(_p)
+  [[ -n "$s" ]] && cd "$HOME/$s" && open -a "Visual Studio Code" "$HOME/$s" && claude
+}
+
+# p - project jump (same as pj, quick shortcut)
+p() { pj; }
+
 # ====== Navigation ======
 
 # .. - go up
