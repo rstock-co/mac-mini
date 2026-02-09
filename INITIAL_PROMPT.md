@@ -16,10 +16,9 @@ Key Tahoe facts you may not know:
 - `launchctl bootout/disable` is the new way to manage services
 - SIP-protected daemons cannot be unloaded (e.g. Spotlight mds)
 
-Now run the full system setup:
+Xcode, MacPorts, and Claude Code are already installed (you wouldn't be running otherwise). Now run the full system setup:
 
-1. Check if Xcode and MacPorts are installed (tell me if they're missing, I'll install them manually)
-2. Run `./scripts/setup.sh` to install all packages and deploy all configs
+1. Run `./scripts/setup.sh` to install remaining packages and deploy all configs
 3. Walk me through installing AeroSpace (Step 6 in macminisetup.md)
 4. Run `./scripts/verify.sh` and fix anything that fails
 5. Show me the final verification output
