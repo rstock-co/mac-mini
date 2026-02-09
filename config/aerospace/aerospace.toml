@@ -34,7 +34,7 @@ preset = 'qwerty'
 [mode.main.binding]
 
 # Launch terminal
-alt-enter = 'exec-and-forget /opt/local/bin/alacritty'
+alt-enter = 'exec-and-forget open -na Terminal'
 
 # Reload config
 alt-shift-c = 'reload-config'
@@ -91,21 +91,9 @@ esc = 'mode main'
 
 # ====== Window Rules ======
 
-# Float system apps
-[[on-window-detected]]
-if.app-id = 'com.apple.systempreferences'
-run = ['layout floating']
-
+# Float utility apps
 [[on-window-detected]]
 if.app-id = 'com.apple.calculator'
-run = ['layout floating']
-
-[[on-window-detected]]
-if.app-id = 'com.apple.ActivityMonitor'
-run = ['layout floating']
-
-[[on-window-detected]]
-if.app-id = 'com.apple.finder'
 run = ['layout floating']
 
 [[on-window-detected]]

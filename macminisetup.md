@@ -73,19 +73,6 @@ Paste the prompt from `INITIAL_PROMPT.md`. **Everything below is automated by Cl
 
 ---
 
-### Step 2: Install Terminal Emulator
-
-```bash
-# Install Alacritty via MacPorts (latest version)
-sudo port install alacritty
-
-# Deploy config from this repo
-mkdir -p ~/.config/alacritty
-cp config/alacritty/alacritty.toml ~/.config/alacritty/
-```
-
----
-
 ## Phase 2: Window Management
 
 ### Step 3: Install AeroSpace
@@ -111,7 +98,7 @@ xattr -d com.apple.quarantine /Applications/AeroSpace.app
 1. System Settings → Privacy & Security → Accessibility
 2. Click "+" and add AeroSpace.app
 3. Toggle it ON
-4. Also add Alacritty.app
+4. Also add Terminal.app
 
 Without Accessibility permissions, AeroSpace cannot manage windows.
 

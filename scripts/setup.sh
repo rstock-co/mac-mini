@@ -146,13 +146,6 @@ if [ -f "$REPO_ROOT/config/aerospace/aerospace.toml" ]; then
     log_success "AeroSpace config deployed"
 fi
 
-# Alacritty
-if [ -f "$REPO_ROOT/config/alacritty/alacritty.toml" ]; then
-    mkdir -p ~/.config/alacritty
-    cp "$REPO_ROOT/config/alacritty/alacritty.toml" ~/.config/alacritty/
-    log_success "Alacritty config deployed"
-fi
-
 # Zsh
 if [ -f "$REPO_ROOT/config/zsh/zshrc" ]; then
     cp "$REPO_ROOT/config/zsh/zshrc" ~/.zshrc

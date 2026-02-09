@@ -77,6 +77,11 @@ pcv() {
 # p - project jump (same as pj, quick shortcut)
 p() { pj; }
 
+# ====== Quick Jumps ======
+
+# admin - jump to mac-mini admin repo + claude
+admin() { cd ~/agents/admin/mac-mini && claude; }
+
 # ====== Navigation ======
 
 # .. - go up

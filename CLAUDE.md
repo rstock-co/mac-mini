@@ -9,7 +9,7 @@ Autonomous macOS Tahoe system administration and configuration management.
 **OS:** macOS Tahoe 26.2+ (Apple Silicon)
 **Package Manager:** MacPorts (`sudo port install`)
 **Window Manager:** AeroSpace (i3-like, no SIP disable needed)
-**Terminal:** Alacritty
+**Terminal:** Apple Terminal
 **Shell:** Zsh (modular, `~/zshrc/*.sh`)
 
 **Load on startup:**
@@ -34,7 +34,7 @@ Read `macminisetup.md` and execute the automated setup:
 ## Skills
 
 ### `/docs` - Tool Documentation
-Reference docs for AeroSpace, Alacritty, MacPorts, CLI tools.
+Reference docs for AeroSpace, MacPorts, CLI tools.
 
 ### `/apple-docs` - Apple Developer Documentation
 Fetches official Apple docs using `apple_docs.py` tool.
@@ -63,7 +63,6 @@ All configs in `config/` directory. Deploy with `./scripts/setup.sh`.
 | Subsystem | Config | Location |
 |-----------|--------|----------|
 | AeroSpace | `config/aerospace/aerospace.toml` | `~/.config/aerospace/` |
-| Alacritty | `config/alacritty/alacritty.toml` | `~/.config/alacritty/` |
 | Zsh | `config/zsh/` | `~/.zshrc` + `~/zshrc/` |
 
 ---
@@ -92,6 +91,27 @@ git add . && git commit -m "Update config" && git push
 # Redeploy all configs from repo:
 ./scripts/setup.sh
 ```
+
+---
+
+## Apple Terminal
+
+Configure via AppleScript (`osascript -e`). No dotfile — settings live in `defaults`.
+
+```bash
+# Read current font size / name / profile
+osascript -e 'tell application "Terminal" to get the font size of the default settings'
+osascript -e 'tell application "Terminal" to get the font name of the default settings'
+osascript -e 'tell application "Terminal" to get the name of the default settings'
+
+# Set font size (applies to default profile)
+osascript -e 'tell application "Terminal" to set the font size of the default settings to 21'
+
+# Set font (use PostScript name, e.g. MesloLGLNFM-Bold, MesloLGLNFM-Regular)
+osascript -e 'tell application "Terminal" to set the font name of the default settings to "MesloLGLNFM-Bold"'
+```
+
+To apply to a specific profile by name, replace `default settings` with `settings set "ProfileName"`.
 
 ---
 

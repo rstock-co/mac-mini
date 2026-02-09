@@ -17,9 +17,6 @@ tmux
 jq
 wget
 
-# Terminal
-alacritty
-
 # Claude Code
 claude-code
 

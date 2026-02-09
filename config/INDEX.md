@@ -13,11 +13,10 @@ Central registry of all subsystem configurations.
 
 ## Terminal
 
-### Alacritty
-- **Config:** `config/alacritty/alacritty.toml`
-- **Location:** `~/.config/alacritty/alacritty.toml`
-- **Reload:** Automatic on save
-- **Docs:** https://alacritty.org/config-alacritty.html
+### Apple Terminal
+- **Profile:** Clear Dark
+- **Font:** MesloLGLNFM-Bold, size 21
+- **Config:** Managed via `defaults` / AppleScript (no dotfile)
 
 ## Shell
 

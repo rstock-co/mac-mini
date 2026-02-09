@@ -83,7 +83,6 @@ echo ""
 
 echo -e "${BLUE}Configuration Files:${NC}"
 check_file ~/.config/aerospace/aerospace.toml "AeroSpace config"
-check_file ~/.config/alacritty/alacritty.toml "Alacritty config"
 check_file ~/.zshrc "zsh config"
 echo ""
 
