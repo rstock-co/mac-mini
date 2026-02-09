@@ -1,0 +1,33 @@
+# ~/.zshrc
+# Main zsh configuration - loads all modules
+
+# Load all modules from ~/zshrc/
+if [ -d "$HOME/zshrc" ]; then
+    for config_file in "$HOME/zshrc"/*.sh; do
+        [ -f "$config_file" ] && source "$config_file"
+    done
+fi
+
+# Zsh options
+setopt AUTO_CD              # cd by typing directory name
+setopt INTERACTIVE_COMMENTS # Allow comments in interactive mode
+setopt MAGIC_EQUAL_SUBST    # Enable filename expansion for arguments
+setopt PROMPT_SUBST         # Enable prompt substitution
+setopt EXTENDED_GLOB        # Extended globbing
+setopt NO_BEEP              # Disable beep
+
+# Completion system
+autoload -Uz compinit
+compinit
+
+# Case-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Colored completion
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Menu selection
+zstyle ':completion:*' menu select
+
+# Simple prompt (customize as needed)
+PROMPT='%F{blue}%~%f %F{green}❯%f '

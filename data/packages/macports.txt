@@ -1,0 +1,42 @@
+# MacPorts Package Manifest
+# Core packages for Mac mini setup
+#
+# Install all: while read pkg; do [[ $pkg =~ ^# ]] || sudo port install $pkg; done < macports.txt
+# Update list: port installed > macports.txt
+
+# ====== Core CLI Tools ======
+ripgrep
+fd
+bat
+eza
+fzf
+neovim
+git
+gh
+btop
+zoxide
+tmux
+jq
+wget
+curl
+
+# ====== Development Tools ======
+cmake
+make
+pkgconfig
+
+# ====== Claude Code ======
+claude-code
+
+# ====== Additional Tools (Optional) ======
+# htop
+# tree
+# watch
+# ncdu
+
+# ====== Language Runtimes (Install as needed) ======
+# nodejs20
+# npm10
+# python312
+# go
+# rust
