@@ -17,98 +17,63 @@ Transform macOS into an ultra-minimal, CLI-focused powerhouse.
 
 ---
 
-## Phase 1: Foundation
+## Manual Prerequisites (Complete Before Running Claude Code)
 
-### Step 1: Install Xcode
+These are done by hand before Claude Code can run on the machine.
 
-**Required for MacPorts and mobile development.**
+### 1. Install Xcode
 
-Full Xcode is needed if building iOS/iPadOS apps.
-
-1. Open Mac App Store → Search "Xcode" → Install (~15GB)
-2. Or download from https://developer.apple.com/download/all/
-
-After installation:
+Full Xcode for mobile dev, or Command Line Tools for CLI-only:
 ```bash
+# Full Xcode: Mac App Store → "Xcode" → Install (~15GB)
 sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
 sudo xcodebuild -license accept
 
-# Verify
-xcode-select -p
-# Should show: /Applications/Xcode.app/Contents/Developer
-```
-
-**CLI-only (no mobile dev):** Install Command Line Tools instead (~500MB):
-```bash
+# OR CLI-only (~500MB):
 xcode-select --install
 sudo xcodebuild -license accept
 ```
 
----
+### 2. Install MacPorts
 
-### Step 2: Install MacPorts
-
-Download the `.pkg` installer for **macOS Tahoe** from:
-https://www.macports.org/install.php
-
-Run the installer, then:
+Download the Tahoe `.pkg` from https://www.macports.org/install.php
 ```bash
-# Add MacPorts to PATH
 echo 'export PATH="/opt/local/bin:/opt/local/sbin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
-
-# Update MacPorts
 sudo port selfupdate
-
-# Verify
-port version
 ```
 
----
-
-### Step 3: Install Core CLI Tools
-
-```bash
-sudo port install \
-  ripgrep \
-  fd \
-  bat \
-  eza \
-  fzf \
-  neovim \
-  git \
-  gh \
-  btop \
-  zoxide \
-  tmux \
-  jq \
-  wget
-```
-
----
-
-### Step 4: Install Claude Code
-
+### 3. Install Claude Code
 ```bash
 sudo port install claude-code
-
-# Verify
-claude --version
-
-# Disable Claude's built-in updater (let MacPorts manage updates)
 mkdir -p ~/.claude
-cat > ~/.claude/settings.json << 'EOF'
-{
-  "disableUpdateCheck": true
-}
-EOF
+echo '{"disableUpdateCheck": true}' > ~/.claude/settings.json
 ```
 
-Now `sudo port upgrade outdated` updates Claude Code along with everything else.
+### 4. Clone This Repo and Launch Claude
+```bash
+mkdir -p ~/agents/admin
+git clone git@github.com:yourusername/macmini.git ~/agents/admin/macmini
+cd ~/agents/admin/macmini
+claude
+```
+
+Paste the prompt from `INITIAL_PROMPT.md`. **Everything below is automated by Claude.**
 
 ---
 
-### Step 5: Install Terminal Emulator
+## Phase 1: Foundation (Automated)
+
+### Step 1: Install Remaining CLI Tools
+
+`setup.sh` installs everything from `data/packages/macports.txt`:
+```bash
+./scripts/setup.sh
+```
+
+---
+
+### Step 2: Install Terminal Emulator
 
 ```bash
 # Install Alacritty via MacPorts (latest version)

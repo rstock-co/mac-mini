@@ -20,10 +20,12 @@ Autonomous macOS Tahoe system administration and configuration management.
 
 ## On First Run
 
-Read `macminisetup.md` and execute the setup autonomously:
-1. Check prerequisites (Xcode, MacPorts)
-2. Install packages from `data/packages/macports.txt`
-3. Deploy configs from `config/`
+Xcode, MacPorts, and Claude Code are already installed (you wouldn't be running otherwise).
+
+Read `macminisetup.md` and execute the automated setup:
+1. Run `scripts/setup.sh` (installs remaining packages, deploys configs)
+2. Install AeroSpace from GitHub releases
+3. Grant Accessibility permissions
 4. Start AeroSpace
 5. Run `scripts/verify.sh`
 
