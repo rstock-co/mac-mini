@@ -34,7 +34,7 @@ preset = 'qwerty'
 [mode.main.binding]
 
 # Launch terminal
-alt-enter = 'exec-and-forget open -n /Applications/Alacritty.app'
+alt-enter = 'exec-and-forget /opt/local/bin/alacritty'
 
 # Reload config
 alt-shift-c = 'reload-config'
@@ -73,15 +73,11 @@ alt-s = 'layout tiles horizontal vertical'
 alt-w = 'layout accordion horizontal vertical'
 alt-shift-space = 'layout floating tiling'
 
-# Split orientation
-alt-v = 'split horizontal'
-alt-b = 'split vertical'
-
 # Rotate layout
 alt-r = 'mode resize'
 
 # Close window
-alt-shift-q = 'close'
+alt-q = 'close'
 
 # ====== Resize Mode ======
 

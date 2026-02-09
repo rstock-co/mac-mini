@@ -13,10 +13,15 @@ history = 10000
 multiplier = 3
 
 [font]
-normal = { family = "MesloLGS Nerd Font", style = "Regular" }
-bold = { family = "MesloLGS Nerd Font", style = "Bold" }
-italic = { family = "MesloLGS Nerd Font", style = "Italic" }
+normal = { family = "DroidSansM Nerd Font Mono", style = "Regular" }
+bold = { family = "DroidSansM Nerd Font Mono", style = "Regular" }
+italic = { family = "DroidSansM Nerd Font Mono", style = "Regular" }
 size = 13.0
+builtin_box_drawing = false
+
+[font.offset]
+y = 0
+x = 0
 
 [colors.primary]
 background = "#282828"

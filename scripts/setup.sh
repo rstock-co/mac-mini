@@ -72,6 +72,69 @@ fi
 
 echo ""
 
+# ====== Install/Update AeroSpace (GitHub Release) ======
+
+log_info "Checking AeroSpace..."
+
+AEROSPACE_INSTALL_DIR="/Applications"
+AEROSPACE_CLI_DIR="$HOME/bin"
+mkdir -p "$AEROSPACE_CLI_DIR"
+
+# Get installed version
+INSTALLED_VERSION=""
+if [ -d "$AEROSPACE_INSTALL_DIR/AeroSpace.app" ] && [ -f "$AEROSPACE_CLI_DIR/aerospace" ]; then
+    INSTALLED_VERSION=$("$AEROSPACE_CLI_DIR/aerospace" --version 2>/dev/null | head -1 | awk '{print $NF}' | sed 's/-.*//')
+fi
+
+# Get latest release from GitHub
+LATEST_JSON=$(curl -sf https://api.github.com/repos/nikitabobko/AeroSpace/releases/latest)
+if [ -z "$LATEST_JSON" ]; then
+    log_warning "Could not fetch AeroSpace releases from GitHub"
+else
+    LATEST_VERSION=$(echo "$LATEST_JSON" | grep '"tag_name"' | sed 's/.*"v\(.*\)".*/\1/' | sed 's/-.*//')
+    LATEST_TAG=$(echo "$LATEST_JSON" | grep '"tag_name"' | sed 's/.*"\(.*\)".*/\1/')
+    ZIP_URL=$(echo "$LATEST_JSON" | grep '"browser_download_url"' | grep '\.zip"' | head -1 | sed 's/.*"\(http[^"]*\)".*/\1/')
+
+    if [ "$INSTALLED_VERSION" = "$LATEST_VERSION" ]; then
+        log_success "AeroSpace $INSTALLED_VERSION (up to date)"
+    else
+        if [ -n "$INSTALLED_VERSION" ]; then
+            log_info "Updating AeroSpace $INSTALLED_VERSION -> $LATEST_VERSION..."
+        else
+            log_info "Installing AeroSpace $LATEST_VERSION..."
+        fi
+
+        TMPDIR=$(mktemp -d)
+        if curl -sL -o "$TMPDIR/aerospace.zip" "$ZIP_URL"; then
+            unzip -qo "$TMPDIR/aerospace.zip" -d "$TMPDIR"
+
+            # Find extracted directory (name varies by release)
+            EXTRACTED=$(find "$TMPDIR" -maxdepth 1 -type d -name "AeroSpace*" | head -1)
+
+            if [ -n "$EXTRACTED" ]; then
+                # Kill running instance before replacing
+                killall AeroSpace 2>/dev/null
+                sleep 1
+
+                # Install app bundle and CLI
+                cp -r "$EXTRACTED/AeroSpace.app" "$AEROSPACE_INSTALL_DIR/"
+                xattr -d com.apple.quarantine "$AEROSPACE_INSTALL_DIR/AeroSpace.app" 2>/dev/null
+                cp "$EXTRACTED/bin/aerospace" "$AEROSPACE_CLI_DIR/"
+                chmod +x "$AEROSPACE_CLI_DIR/aerospace"
+
+                log_success "AeroSpace $LATEST_VERSION installed"
+            else
+                log_warning "AeroSpace zip extraction failed"
+            fi
+        else
+            log_warning "AeroSpace download failed"
+        fi
+        rm -rf "$TMPDIR"
+    fi
+fi
+
+echo ""
+
 # ====== Deploy Configs ======
 
 log_info "Deploying configurations..."
@@ -110,7 +173,7 @@ log_info "Checking services..."
 
 if [ -d "/Applications/AeroSpace.app" ]; then
     if pgrep -x AeroSpace > /dev/null; then
-        aerospace reload-config 2>/dev/null
+        "$HOME/bin/aerospace" reload-config 2>/dev/null
         log_success "AeroSpace running (config reloaded)"
     else
         open /Applications/AeroSpace.app

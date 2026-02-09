@@ -11,6 +11,9 @@ export PATH="$HOME/.local/bin:$PATH"
 # Cargo (Rust)
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# User bin (AeroSpace CLI, local tools)
+export PATH="$HOME/bin:$PATH"
+
 # ====== History ======
 
 HISTFILE="$HOME/.zsh_history"
