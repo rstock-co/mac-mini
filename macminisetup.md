@@ -53,8 +53,8 @@ echo '{"disableUpdateCheck": true}' > ~/.claude/settings.json
 ### 4. Clone This Repo and Launch Claude
 ```bash
 mkdir -p ~/agents/admin
-git clone git@github.com:yourusername/macmini.git ~/agents/admin/macmini
-cd ~/agents/admin/macmini
+git clone git@github.com:yourusername/mac-mini.git ~/agents/admin/mac-mini
+cd ~/agents/admin/mac-mini
 claude
 ```
 
@@ -307,8 +307,8 @@ Edit → copy back → commit:
 nvim ~/.config/aerospace/aerospace.toml
 
 # Sync back to repo
-cp ~/.config/aerospace/aerospace.toml ~/agents/admin/macmini/config/aerospace/
-cd ~/agents/admin/macmini
+cp ~/.config/aerospace/aerospace.toml ~/agents/admin/mac-mini/config/aerospace/
+cd ~/agents/admin/mac-mini
 git add config/aerospace/aerospace.toml
 git commit -m "Update AeroSpace config"
 git push

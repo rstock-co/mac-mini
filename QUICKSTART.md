@@ -8,12 +8,12 @@ By the time Claude Code is running, these are already complete:
 - Xcode installed and configured
 - MacPorts installed and in PATH
 - Claude Code installed via MacPorts
-- This repo cloned to `~/agents/admin/macmini`
+- This repo cloned to `~/agents/admin/mac-mini`
 
 ## Launch
 
 ```bash
-cd ~/agents/admin/macmini
+cd ~/agents/admin/mac-mini
 claude
 ```
 

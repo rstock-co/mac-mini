@@ -6,14 +6,14 @@ Infrastructure-as-code for Mac mini running macOS Tahoe 26.
 
 ### Push from Arch
 ```bash
-cd /home/neo/agents/admin/macmini
-gh repo create macmini --private --source=. --remote=origin --push
+cd /home/neo/agents/admin/mac-mini
+gh repo create mac-mini --private --source=. --remote=origin --push
 ```
 
 ### On Mac Mini
 ```bash
-git clone git@github.com:yourusername/macmini.git ~/agents/admin/macmini
-cd ~/agents/admin/macmini
+git clone git@github.com:yourusername/mac-mini.git ~/agents/admin/mac-mini
+cd ~/agents/admin/mac-mini
 claude  # Claude reads CLAUDE.md and sets up everything
 ```
 
@@ -34,7 +34,7 @@ sudo port selfupdate && sudo port upgrade outdated
 ## Architecture
 
 ```
-macmini/
+mac-mini/
 ├── CLAUDE.md                       # Agent instructions
 ├── macminisetup.md                 # 25-step setup guide
 ├── config/                         # All configs (version controlled)
@@ -54,8 +54,8 @@ macmini/
 ## Rebuild from Scratch
 
 ```bash
-git clone <this-repo> ~/agents/admin/macmini
-cd ~/agents/admin/macmini
+git clone <this-repo> ~/agents/admin/mac-mini
+cd ~/agents/admin/mac-mini
 ./scripts/setup.sh
 ./scripts/verify.sh
 ```

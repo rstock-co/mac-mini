@@ -78,7 +78,7 @@ ls -la ~/zshrc/
 # Files should be numbered: 01-core.sh, 02-nav.sh, etc.
 
 # Redeploy from repo
-cp ~/agents/admin/macmini/config/zsh/modules/*.sh ~/zshrc/
+cp ~/agents/admin/mac-mini/config/zsh/modules/*.sh ~/zshrc/
 source ~/.zshrc
 ```
 
@@ -110,7 +110,7 @@ launchctl disable gui/$(id -u)/{service-name}
 
 Rebuild from this repo:
 ```bash
-cd ~/agents/admin/macmini
+cd ~/agents/admin/mac-mini
 git pull
 ./scripts/setup.sh
 ./scripts/verify.sh
