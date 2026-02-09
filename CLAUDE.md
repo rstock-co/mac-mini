@@ -78,13 +78,17 @@ Modules load in numbered order (`01-core.sh` first).
 
 ---
 
-## Dotfiles (Bare Git)
+## Config Management
+
+**No separate dotfiles repo.** This admin repo is the single source of truth.
 
 ```bash
-dotfiles status
-dotfiles add <file>
-dotfiles commit -m "message"
-dotfiles push
+# After editing a config on the Mac:
+cp ~/.config/aerospace/aerospace.toml config/aerospace/
+git add . && git commit -m "Update config" && git push
+
+# Redeploy all configs from repo:
+./scripts/setup.sh
 ```
 
 ---

@@ -32,7 +32,6 @@ Central registry of all subsystem configurations.
 | `02-nav.sh` | eza, zoxide, fzf |
 | `03-pkg.sh` | MacPorts shortcuts |
 | `04-alias-management.sh` | Alias tools |
-| `05-dotfiles.sh` | Bare git dotfiles |
 
 ## Package Management
 
@@ -52,7 +51,9 @@ Central registry of all subsystem configurations.
 - **Binary:** `/opt/local/bin/claude`
 - **Updates:** Managed by MacPorts
 
-## Dotfiles
+## Config Management
 
-- **Bare repo:** `~/.dotfiles/`
-- **Command:** `dotfiles` alias
+**No separate dotfiles repo.** This admin repo is the single source of truth.
+
+- **Edit on Mac** → copy back to `config/` → commit → push
+- **Redeploy from repo** → `./scripts/setup.sh`

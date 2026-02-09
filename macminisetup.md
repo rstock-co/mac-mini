@@ -293,7 +293,6 @@ Modules load in numbered order:
 - `02-nav.sh` - eza, zoxide, fzf, bat
 - `03-pkg.sh` - MacPorts shortcuts
 - `04-alias-management.sh` - Alias editing/viewing
-- `05-dotfiles.sh` - Bare git dotfiles
 
 ---
 
@@ -333,12 +332,26 @@ git config --global init.defaultBranch main
 
 ---
 
-### Step 20: Set Up Bare Git Dotfiles
+### Step 20: Config Management
 
+**No separate dotfiles repo needed.** This admin repo IS your config manager.
+
+Edit → copy back → commit:
 ```bash
-git init --bare $HOME/.dotfiles
-source ~/.zshrc  # loads dotfiles alias
-dotfiles config --local status.showUntrackedFiles no
+# Example: you edit AeroSpace config on the Mac
+nvim ~/.config/aerospace/aerospace.toml
+
+# Sync back to repo
+cp ~/.config/aerospace/aerospace.toml ~/agents/admin/macmini/config/aerospace/
+cd ~/agents/admin/macmini
+git add config/aerospace/aerospace.toml
+git commit -m "Update AeroSpace config"
+git push
+```
+
+To redeploy all configs from repo:
+```bash
+./scripts/setup.sh
 ```
 
 ---
