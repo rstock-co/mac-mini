@@ -88,7 +88,7 @@ cp config/alacritty/alacritty.toml ~/.config/alacritty/
 
 ## Phase 2: Window Management
 
-### Step 6: Install AeroSpace
+### Step 3: Install AeroSpace
 
 AeroSpace is an i3-like tiling WM. No SIP disable needed.
 
@@ -117,7 +117,7 @@ Without Accessibility permissions, AeroSpace cannot manage windows.
 
 ---
 
-### Step 7: Configure AeroSpace
+### Step 4: Configure AeroSpace
 
 ```bash
 mkdir -p ~/.config/aerospace
@@ -133,7 +133,7 @@ Key design choices in the config:
 
 ---
 
-### Step 8: Start AeroSpace
+### Step 5: Start AeroSpace
 
 ```bash
 open /Applications/AeroSpace.app
@@ -148,7 +148,7 @@ AeroSpace appears in the menu bar. It starts at login automatically (configured 
 
 ## Phase 3: Debloat macOS Tahoe
 
-### Step 9: Hide Dock
+### Step 6: Hide Dock
 
 ```bash
 defaults write com.apple.dock autohide -bool true
@@ -159,7 +159,7 @@ killall Dock
 
 ---
 
-### Step 10: Disable Animations
+### Step 7: Disable Animations
 
 ```bash
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
@@ -172,7 +172,7 @@ killall Finder
 
 ---
 
-### Step 11: Reduce Liquid Glass Transparency
+### Step 8: Reduce Liquid Glass Transparency
 
 macOS Tahoe uses the Liquid Glass design. Tone it down:
 
@@ -185,7 +185,7 @@ Or: System Settings → Accessibility → Display → Reduce Transparency
 
 ---
 
-### Step 12: Disable Spotlight (Use fzf Instead)
+### Step 9: Disable Spotlight (Use fzf Instead)
 
 ```bash
 sudo mdutil -a -i off
@@ -195,7 +195,7 @@ Do NOT try to `launchctl unload` the Spotlight daemon - it is SIP-protected on T
 
 ---
 
-### Step 13: Disable Useless Services
+### Step 10: Disable Useless Services
 
 ```bash
 # Siri
@@ -214,7 +214,7 @@ sudo tmutil disable
 
 ---
 
-### Step 14: Remove Bloatware Apps
+### Step 11: Remove Bloatware Apps
 
 **App Store apps (safe to delete):**
 ```bash
@@ -229,7 +229,7 @@ System apps (News, Stocks, Home, FaceTime) are on the signed system volume and *
 
 ---
 
-### Step 15: Finder Settings
+### Step 12: Finder Settings
 
 ```bash
 defaults write com.apple.finder AppleShowAllFiles -bool true
@@ -244,7 +244,7 @@ killall Finder
 
 ## Phase 4: Shell Configuration
 
-### Step 16: Deploy Modular Zsh Config
+### Step 13: Deploy Modular Zsh Config
 
 ```bash
 mkdir -p ~/zshrc
@@ -261,7 +261,7 @@ Modules load in numbered order:
 
 ---
 
-### Step 17: Install Nerd Font
+### Step 14: Install Nerd Font
 
 Required for terminal icons:
 ```bash
@@ -275,7 +275,7 @@ curl -L -o ~/Library/Fonts/MesloLGSNF-Bold.ttf \
 
 ## Phase 5: Dotfiles & Git
 
-### Step 18: Set Up SSH Keys
+### Step 15: Set Up SSH Keys
 
 ```bash
 ssh-keygen -t ed25519 -C "your@email.com"
@@ -287,7 +287,7 @@ pbcopy < ~/.ssh/id_ed25519.pub
 
 ---
 
-### Step 19: Configure Git
+### Step 16: Configure Git
 
 ```bash
 git config --global user.name "Your Name"
@@ -297,7 +297,7 @@ git config --global init.defaultBranch main
 
 ---
 
-### Step 20: Config Management
+### Step 17: Config Management
 
 **No separate dotfiles repo needed.** This admin repo IS your config manager.
 
@@ -323,7 +323,7 @@ To redeploy all configs from repo:
 
 ## Phase 6: Performance
 
-### Step 21: Energy Settings
+### Step 18: Energy Settings
 
 ```bash
 sudo pmset -a sleep 0
@@ -333,7 +333,7 @@ sudo pmset -a powernap 0
 
 ---
 
-### Step 22: Compile Zsh for Speed
+### Step 19: Compile Zsh for Speed
 
 ```bash
 zcompile ~/.zshrc
@@ -344,7 +344,7 @@ for f in ~/zshrc/*.sh; do zcompile "$f"; done
 
 ## Phase 7: Language Runtimes
 
-### Step 23: Install As Needed
+### Step 20: Install As Needed
 
 ```bash
 # Node.js
@@ -367,7 +367,7 @@ sudo port install go
 
 ---
 
-### Step 24: Additional Dev Tools (Optional)
+### Step 21: Additional Dev Tools (Optional)
 
 ```bash
 sudo port install delta lazygit hyperfine tokei sd
@@ -375,7 +375,7 @@ sudo port install delta lazygit hyperfine tokei sd
 
 ---
 
-### Step 25: Final Tweaks
+### Step 22: Final Tweaks
 
 ```bash
 defaults write com.apple.LaunchServices LSQuarantine -bool false

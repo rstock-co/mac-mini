@@ -19,8 +19,8 @@ Key Tahoe facts you may not know:
 Xcode, MacPorts, and Claude Code are already installed (you wouldn't be running otherwise). Now run the full system setup:
 
 1. Run `./scripts/setup.sh` to install remaining packages and deploy all configs
-3. Walk me through installing AeroSpace (Step 6 in macminisetup.md)
-4. Run `./scripts/verify.sh` and fix anything that fails
-5. Show me the final verification output
+2. Walk me through installing AeroSpace (Step 3 in macminisetup.md)
+3. Run `./scripts/verify.sh` and fix anything that fails
+4. Show me the final verification output
 
 If any MacPorts package fails to build, skip it, note it, and continue with the rest. We'll fix failures after the core setup is done.
