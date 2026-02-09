@@ -16,29 +16,21 @@ export PATH="$HOME/.cargo/bin:$PATH"
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY
 
-# History options
-setopt SHARE_HISTORY          # Share history between sessions
-setopt HIST_IGNORE_DUPS       # Don't record duplicates
-setopt HIST_IGNORE_SPACE      # Ignore commands starting with space
-setopt HIST_REDUCE_BLANKS     # Remove superfluous blanks
-setopt HIST_VERIFY            # Show command before executing from history
-
-# ====== Environment Variables ======
+# ====== Environment ======
 
 export EDITOR="nvim"
 export VISUAL="nvim"
 export PAGER="less"
 export LESS="-R"
-
-# Colored man pages
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-
-# Language
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
-
-# ====== macOS Specific ======
 
 # Disable macOS zsh sessions
 export SHELL_SESSIONS_DISABLE=1

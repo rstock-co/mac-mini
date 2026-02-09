@@ -1,419 +1,117 @@
 # Troubleshooting Guide
 
-Common issues and solutions for Mac mini setup.
+## AeroSpace
+
+### Windows not tiling
+1. Check Accessibility permissions: System Settings → Privacy & Security → Accessibility → AeroSpace ON
+2. Reload config: `aerospace reload-config`
+3. Check if running: `pgrep -x AeroSpace`
+4. Restart: Quit from menu bar, then `open /Applications/AeroSpace.app`
+
+### Keybinds not working
+1. Verify Accessibility permissions are granted
+2. Check config syntax: AeroSpace logs errors to stdout
+3. Ensure `alt` key is not remapped by another tool
 
 ---
 
-## Installation Issues
+## MacPorts
 
-### Xcode Command Line Tools Not Found
-
-**Problem:** `xcode-select: error: command line tools are not installed`
-
-**Solution:**
+### Command not found
 ```bash
-xcode-select --install
-# Wait for installation to complete
-sudo xcodebuild -license accept
-```
-
-### MacPorts Command Not Found
-
-**Problem:** `port: command not found`
-
-**Solution:**
-```bash
-# Add MacPorts to PATH
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-
-# Make it permanent
 echo 'export PATH="/opt/local/bin:/opt/local/sbin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
 ```
 
-### MacPorts Build Failures
-
-**Problem:** Package fails to build
-
-**Solution:**
+### Package build failure
 ```bash
-# Clean and retry
 sudo port clean <package>
 sudo port install <package>
+```
 
-# If still fails, check logs
-port log <package>
+### Permission errors
+Use `sudo` with port commands. Do NOT `chown /opt/local` - that breaks MacPorts.
 
-# Update MacPorts
+### Package not found
+```bash
 sudo port selfupdate
-```
-
----
-
-## Window Management Issues
-
-### yabai Not Tiling Windows
-
-**Problem:** Windows not tiling, yabai appears broken
-
-**Solutions:**
-
-1. **Check SIP status:**
-   ```bash
-   csrutil status
-   # Should show: enabled with some features disabled
-   ```
-
-2. **Disable SIP partially (if needed):**
-   - Reboot into Recovery Mode (Cmd+R)
-   - Open Terminal
-   - Run: `csrutil enable --without fs --without debug --without nvram`
-   - Reboot
-
-3. **Check yabai logs:**
-   ```bash
-   tail -f /tmp/yabai_*.out.log
-   ```
-
-4. **Restart yabai:**
-   ```bash
-   yabai --restart-service
-   ```
-
-5. **Verify config:**
-   ```bash
-   cat ~/.config/yabai/yabairc
-   chmod +x ~/.config/yabai/yabairc
-   ```
-
-### skhd Keybinds Not Working
-
-**Problem:** Keyboard shortcuts don't work
-
-**Solutions:**
-
-1. **Grant Accessibility permissions:**
-   - System Settings → Privacy & Security → Accessibility
-   - Add Terminal.app or Alacritty.app
-   - Toggle it off and on
-
-2. **Check skhd logs:**
-   ```bash
-   tail -f /tmp/skhd_*.out.log
-   ```
-
-3. **Verify config syntax:**
-   ```bash
-   skhd --check
-   ```
-
-4. **Restart skhd:**
-   ```bash
-   skhd --restart-service
-   ```
-
-### Services Not Starting
-
-**Problem:** yabai/skhd won't start
-
-**Solution:**
-```bash
-# Check if already running
-ps aux | grep -E 'yabai|skhd' | grep -v grep
-
-# Kill existing processes
-killall yabai
-killall skhd
-
-# Start fresh
-yabai --start-service
-skhd --start-service
-
-# Check status
-ps aux | grep yabai | grep -v grep
-ps aux | grep skhd | grep -v grep
-```
-
----
-
-## Configuration Issues
-
-### Config Changes Not Applied
-
-**Problem:** Edited config but no changes
-
-**Solution:**
-```bash
-# For yabai
-yabai --restart-service
-
-# For skhd
-skhd --restart-service
-
-# For zsh
-source ~/.zshrc
-
-# For Alacritty (auto-reloads on save)
-# Just save the file
-```
-
-### Configs Not Found
-
-**Problem:** Apps can't find their configs
-
-**Solution:**
-```bash
-# Re-deploy from repo
-cd ~/agents/admin/macmini
-./scripts/setup.sh
-
-# Or manually copy
-cp config/yabai/yabairc ~/.config/yabai/
-cp config/skhd/skhdrc ~/.config/skhd/
-cp config/alacritty/alacritty.toml ~/.config/alacritty/
-cp config/zsh/zshrc ~/.zshrc
-cp config/zsh/modules/*.sh ~/zshrc/
-```
-
----
-
-## Package Management Issues
-
-### Package Not Found
-
-**Problem:** `Error: Port <package> not found`
-
-**Solution:**
-```bash
-# Update ports tree
-sudo port selfupdate
-
-# Search for package
 port search <name>
-
-# Check package name spelling
-port list | grep <name>
-```
-
-### Permission Errors
-
-**Problem:** `Error: You do not have permission`
-
-**Solution:**
-```bash
-# Fix MacPorts ownership
-sudo chown -R $(whoami) /opt/local
-
-# Or use sudo
-sudo port install <package>
-```
-
-### Slow Package Installation
-
-**Problem:** MacPorts building from source is slow
-
-**Solution:**
-```bash
-# Install binary if available
-sudo port install <package> +universal
-
-# Or wait - building from source is the Arch way
-# Check progress: tail -f /opt/local/var/macports/logs/...
 ```
 
 ---
 
-## Shell Issues
+## Alacritty
 
-### Zsh Module Not Loading
-
-**Problem:** Aliases or functions not available
-
-**Solution:**
+### Font not rendering
+Install Nerd Font:
 ```bash
-# Check modules exist
-ls -la ~/zshrc/
-
-# Re-deploy modules
-cp ~/agents/admin/macmini/config/zsh/modules/*.sh ~/zshrc/
-
-# Reload shell
-source ~/.zshrc
-
-# Debug: Check for errors
-zsh -x ~/.zshrc
+curl -L -o ~/Library/Fonts/MesloLGSNF-Regular.ttf \
+  "https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/L/Regular/MesloLGLNerdFont-Regular.ttf"
 ```
 
-### Command Not Found After Install
+### Config errors
+Check Alacritty logs in terminal output. Common issue: using deprecated `[shell]` section instead of `[terminal]`.
 
-**Problem:** Installed package but command not found
+---
 
-**Solution:**
+## Claude Code
+
+### Not found after install
 ```bash
-# Check if binary exists
-port contents <package> | grep bin
-
-# Add to PATH if needed
 export PATH="/opt/local/bin:$PATH"
-
-# Make permanent
-echo 'export PATH="/opt/local/bin:$PATH"' >> ~/.zshrc
-```
-
----
-
-## Claude Code Issues
-
-### Claude Code Not Found
-
-**Problem:** `claude: command not found`
-
-**Solution:**
-```bash
-# Install via MacPorts
-sudo port install claude-code
-
-# Verify installation
 which claude
-claude --version
-
-# If installed but not found, check PATH
-export PATH="/opt/local/bin:$PATH"
 ```
 
-### Claude Code Auto-Update Interfering
-
-**Problem:** Claude keeps updating itself instead of using MacPorts
-
-**Solution:**
+### Auto-update interfering
 ```bash
-# Disable Claude's auto-updater
 mkdir -p ~/.claude
 echo '{"disableUpdateCheck": true}' > ~/.claude/settings.json
-
-# Verify
-cat ~/.claude/settings.json
 ```
 
 ---
 
-## Performance Issues
+## Shell
 
-### System Feels Slow
-
-**Solutions:**
-
-1. **Disable animations:**
-   ```bash
-   defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
-   defaults write com.apple.dock expose-animation-duration -float 0
-   killall Dock
-   ```
-
-2. **Disable Spotlight:**
-   ```bash
-   sudo mdutil -a -i off
-   ```
-
-3. **Check running processes:**
-   ```bash
-   btop
-   # or
-   top
-   ```
-
-### High CPU Usage
-
-**Problem:** System running hot
-
-**Solution:**
+### Modules not loading
 ```bash
-# Check what's using CPU
-btop
+ls -la ~/zshrc/
+# Files should be numbered: 01-core.sh, 02-nav.sh, etc.
 
-# Common culprits:
-# - Spotlight indexing (mdworker)
-# - Time Machine backups
-# - Background app updates
-
-# Disable Spotlight
-sudo mdutil -a -i off
-
-# Disable Time Machine
-sudo tmutil disable
+# Redeploy from repo
+cp ~/agents/admin/macmini/config/zsh/modules/*.sh ~/zshrc/
+source ~/.zshrc
 ```
+
+### fzf keybindings not working
+MacPorts installs fzf keybindings to `/opt/local/share/fzf/shell/`. Verify the path in `02-nav.sh`.
 
 ---
 
-## Network Issues
+## macOS Tahoe Specific
 
-### Can't Download Packages
+### Liquid Glass too transparent
+System Settings → Accessibility → Display → Reduce Transparency
 
-**Problem:** MacPorts can't download
+### Can't delete system apps
+News, Stocks, Home, FaceTime are on the signed system volume. Cannot be removed on Tahoe.
 
-**Solution:**
+### Service management
 ```bash
-# Check internet connection
-ping google.com
+# Disable user agent
+launchctl bootout gui/$(id -u)/{service-name}
+launchctl disable gui/$(id -u)/{service-name}
 
-# Try different mirror
-sudo port selfupdate
-
-# Check firewall settings
+# Revert: delete /private/var/db/com.apple.xpc.launchd/disabled.plist and reboot
 ```
 
 ---
 
 ## Recovery
 
-### Complete System Reset
-
-If everything is broken, rebuild from this repo:
-
+Rebuild from this repo:
 ```bash
 cd ~/agents/admin/macmini
 git pull
 ./scripts/setup.sh
 ./scripts/verify.sh
 ```
-
-### Config Restore
-
-```bash
-# Restore all configs
-cd ~/agents/admin/macmini
-cp -r config/yabai/* ~/.config/yabai/
-cp -r config/skhd/* ~/.config/skhd/
-cp -r config/alacritty/* ~/.config/alacritty/
-cp config/zsh/zshrc ~/.zshrc
-cp config/zsh/modules/*.sh ~/zshrc/
-
-# Restart services
-yabai --restart-service
-skhd --restart-service
-source ~/.zshrc
-```
-
----
-
-## Getting Help
-
-1. **Check logs:**
-   - yabai: `/tmp/yabai_*.out.log`
-   - skhd: `/tmp/skhd_*.out.log`
-   - MacPorts: `/opt/local/var/macports/logs/`
-
-2. **Verify installation:**
-   ```bash
-   ./scripts/verify.sh
-   ```
-
-3. **Review config:**
-   ```bash
-   cat config/INDEX.md
-   ```
-
-4. **Check documentation:**
-   - yabai: https://github.com/koekeishiya/yabai/wiki
-   - skhd: https://github.com/koekeishiya/skhd
-   - MacPorts: https://www.macports.org/
